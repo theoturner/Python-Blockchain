@@ -151,6 +151,39 @@ End of Blockchain class
 
 '''
 ===========================================================================
+Consensus Mechanism
+===========================================================================
+If a longer chain exists, check it is valid and if so replace current chain
+with it. If this is the longest chain, returns False.
+===========================================================================
+'''
+def consensus():
+    global blockchain
+    longest = None
+    length = len(blockchain)
+    for node in nodes:
+        response = requests.get('http://{}/blockchain'.format(node))
+        length = response.json()['length']
+        thisChain = response.json()['chain']
+        if thisLength > length and blockchain.isValid(thisChain):
+            length = thisLength
+            longest = thisChain
+    if longest:
+        blockchain = longest
+        return True
+    else:
+        return False
+
+'''
+===========================================================================
+End of Consensus Mechanism
+===========================================================================
+'''
+
+
+
+'''
+===========================================================================
 Endpoints
 ===========================================================================
 Six endpoints - adapted from IBM Blockchain developerWorks documentation.
@@ -173,7 +206,7 @@ def getBlockchain():
     contents = []
     for block in nodeChainCopy.chain:
         contents.append(block.__dict__)
-    return json.dumps(contents)
+    return json.dumps({"length": len(contents), "chain": contents})
 
 '''
 Submit a transaction from the app (POST)
