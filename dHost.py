@@ -64,6 +64,22 @@ class Blockchain:
         self.chain.append(firstBlock)
 
     """
+    Checks if the previous hash matches and proof of work is valid. If they
+    are, the block is appended to the Blockchain.
+
+    MARKER TODO: print success/failure
+    """
+    def appendToChain(self, block, pow):
+        if (block.preceding == self.preceding.hash
+        and pow.startswith('0' * Blockchain.difficulty)
+        and pow == block.doWork()):
+            block.hash = pow
+            self.chain.append(block)
+            return True
+        else:
+            return False
+
+    """
     Proof of Work (PoW): hard to produce data but easy to check - prevents
     creation of multiple 'valid' chains as well as defends against Denial
     of Service (DoS) attacks. Try random nonce until match on first
