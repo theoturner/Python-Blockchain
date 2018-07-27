@@ -9,14 +9,22 @@ For larger-scale implementations, please modify the confirm() function to
 split transactions appropriately.
 """
 
-from hashlib import sha256
+import requests
 import time
 import json
+from hashlib import sha256
+from flask import Flask, request
+
+
+app = Flask(__name__)
 
 """
+===========================================================================
 Block
+===========================================================================
 A group of records added to the blockchain in each appending operation. For
 record-keeping, merkle trees are unnecessary.
+===========================================================================
 """
 class Block:
 
@@ -34,12 +42,21 @@ class Block:
         hash = sha256(json.dumps(self.__dict__, sort_keys = True).encode())
         return hash.hexdigest()
 
+"""
+===========================================================================
+End of Block class
+===========================================================================
+"""
+
 
 """
+===========================================================================
 Blockchain
+===========================================================================
 Essentially a singly linked list of blocks but referring to the previous
 block with a hash, rather than a pointer. Uses same structure as the IBM
 Blockchain but uses Proof of Work over their own consensus mechanism.
+===========================================================================
 """
 class Blockchain:
 
@@ -121,3 +138,46 @@ class Blockchain:
             return blockToAdd.index
         else:
             return False
+
+"""
+===========================================================================
+End of Blockchain class
+===========================================================================
+"""
+
+
+nodeChainCopy = Blockchain()
+
+
+"""
+===========================================================================
+Endpoints
+===========================================================================
+Four endpoints:
+1. Query the node's copy of the blockchain (GET)
+2. Submit a transaction from the app (POST)
+3. Request confirmation of transactions (GET)
+3. Query unconfirmed transactions
+===========================================================================
+"""
+@app.route('/blockchain', methods=['GET']) # MARKER no camelcase http?
+def getBlockchain():
+
+
+@app.route('/submit', methods=['POST'])
+def submit():
+
+
+@app.route('/confirm', methods=['GET']) # MARKER no camelcase http?
+def requestConfirmation():
+
+
+@app.route('/unconfirmed')
+def getUnconfirmed():
+
+
+"""
+===========================================================================
+End of endpoints
+===========================================================================
+"""
