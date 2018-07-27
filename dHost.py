@@ -8,9 +8,8 @@ import json
 
 """
 Block
-A group of records added to the blockchain in each
-appending operation. For record-keeping, merkle trees are
-unnecessary.
+A group of records added to the blockchain in each appending operation. For
+record-keeping, merkle trees are unnecessary.
 """
 class Block:
 
@@ -27,9 +26,17 @@ class Block:
         hash = sha256(json.dumps(self.__dict__, sort_keys = True).encode())
         return hash.hexdigest()
 
+
 """
 Blockchain
-Essentially a singly linked list of blocks but referring to
-the previous block with a hash, rather than a pointer.
+Essentially a singly linked list of blocks but referring to the previous
+block with a hash, rather than a pointer.
 """
 class Blockchain:
+
+    def __init__(self):
+        self.chain = []
+        self.unconfirmed = [] # Transactions not yet hashed and appended
+        self.intialiseChain()
+
+    def initialiseChain():
