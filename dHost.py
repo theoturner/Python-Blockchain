@@ -43,7 +43,7 @@ Blockchain but uses Proof of Work over their own consensus mechanism.
 """
 class Blockchain:
 
-    difficultyFactor = 5; # Adjusted as needed based on hash power
+    difficultyFactor = 1; # Adjusted as needed based on hash power
 
     def __init__(self):
         self.chain = [] # The actual blockchain
@@ -121,4 +121,3 @@ class Blockchain:
             return blockToAdd.index
         else:
             return False
-    
