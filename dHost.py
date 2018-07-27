@@ -127,7 +127,7 @@ class Blockchain:
     MARKER TODO print nothing to mine
     """
     def confirm(self):
-        if self.unconfimed: # If there are transactions to confirm
+        if self.unconfirmed: # If there are transactions to confirm
             blockToAdd = Block( identifier = self.preceding.identifier + 1,
                                 last = self.preceding.hash,
                                 tx = self.unconfirmed
@@ -135,7 +135,7 @@ class Blockchain:
             pow = self.proveWork(blockToAdd)
             self.appendToChain(blockToAdd, pow)
             self.unconfirmed = []
-            return blockToAdd.index
+            return True
         else:
             return False
 
@@ -153,31 +153,83 @@ nodeChainCopy = Blockchain()
 ===========================================================================
 Endpoints
 ===========================================================================
-Four endpoints:
+Six endpoints:
 1. Query the node's copy of the blockchain (GET)
 2. Submit a transaction from the app (POST)
 3. Request confirmation of transactions (GET)
-3. Query unconfirmed transactions
+4. Query unconfirmed transactions
+5. Add nodes to network (POST)
+6. Add block confirmed by another node to chain (POST)
 ===========================================================================
+"""
+
+nodes = set()
+nodeChainCopy = Blockchain()
+
+"""
+Query the node's copy of the blockchain (GET)
 """
 @app.route('/blockchain', methods=['GET']) # MARKER no camelcase http?
 def getBlockchain():
+    contents = []
+    for block in nodeChainCopy.chain:
+        contents.append(block.__dict__)
+    return json.dumps(contents)
 
-
+"""
+Submit a transaction from the app (POST)
+"""
 @app.route('/submit', methods=['POST'])
 def submit():
+    data = request.get_json();
+    data.timeAppended = time.time()
+    dataItems = ["author", "content"]
+    for items in dataItems:
+        if not data.get(field):
+            return "Transaction rejected: all fields required.", 404
+    nodeChainCopy.appendToChain(data)
+    return "Transaction accepted.", 201
 
-
+"""
+Request confirmation of transactions (GET)
+"""
 @app.route('/confirm', methods=['GET']) # MARKER no camelcase http?
 def requestConfirmation():
+    if nodeChainCopy.confirm():
+        return "Block confirmed."
+    else:
+        return "No pending transactions."
 
-
+"""
+Query unconfirmed transactions
+"""
 @app.route('/unconfirmed')
 def getUnconfirmed():
+    return json.dumps(nodeChainCopy.unconfirmed)
 
+"""
+Add nodes to network (POST)
+"""
+@app.route('/addnodes', methods=['POST'])
+def addNodes():
+    visibleNodes = request.get_json()
+    if not visibleNodes:
+        return "Bad request.", 400
+    for node in visibleNodes:
+        nodes.add(node)
+    return "Nodes added to network.", 201
+
+"""
+Add block confirmed by another node to this node's chain (POST)
+"""
+@app.route('/addblocks', methods=['POST'])
+def addBlocks():
 
 """
 ===========================================================================
 End of endpoints
 ===========================================================================
 """
+
+
+app.run(debug = True, port = 8000)
