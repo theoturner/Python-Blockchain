@@ -1,6 +1,7 @@
 """
 dHost - a node in the network.
 Uses SHA256 as its cryptographic hash function.
+Blockchain class uses structure of the IBM Blockchain.
 """
 
 from hashlib import sha256
@@ -31,7 +32,8 @@ class Block:
 """
 Blockchain
 Essentially a singly linked list of blocks but referring to the previous
-block with a hash, rather than a pointer.
+block with a hash, rather than a pointer. Uses same structure as the IBM
+blockchain.
 """
 class Blockchain:
 
@@ -39,6 +41,14 @@ class Blockchain:
         self.chain = [] # The actual blockchain
         self.unconfirmed = [] # Transactions not yet hashed and appended
         self.intialiseChain()
+
+    """
+    Point to preceding block - note this requires the first block to have
+    been created already. Uses readonly property shorthand.
+    """
+    @property
+    def preceding(self):
+        return self.chain[-1] # Conveniently can use -1 in Python
 
     """
     Creates the first block in the blockchain as this is distinct from
