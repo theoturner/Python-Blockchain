@@ -1,7 +1,7 @@
 """
 dHost - a node in the network.
-Uses SHA256 as its cryptographic hash function.
-Blockchain class uses structure of the IBM Blockchain.
+Uses SHA256 as its cryptographic hash function. The Blockchain class has
+the structure of the IBM Blockchain but with PoW instead of SE.
 """
 
 from hashlib import sha256
@@ -33,7 +33,7 @@ class Block:
 Blockchain
 Essentially a singly linked list of blocks but referring to the previous
 block with a hash, rather than a pointer. Uses same structure as the IBM
-blockchain.
+Blockchain but uses Proof of Work over their own consensus mechanism.
 """
 class Blockchain:
 
