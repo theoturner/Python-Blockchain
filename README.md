@@ -7,4 +7,4 @@ The distributed ledger is based on the [IBM Blockchain](https://www.ibm.com/bloc
 [Flask](http://flask.pocoo.org/) is used for the front end and is needed to run the app.
 
 For larger-scale implementations, please modify the confirm() function to
-split transactions appropriately.
+split transactions appropriately and security audit the code.
