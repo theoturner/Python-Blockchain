@@ -88,6 +88,21 @@ class Blockchain:
                 and pow == block.doWork())
 
     """
+    Checks if the previous hash matches and proof of work is valid. If they
+    are, the block is appended to the Blockchain.
+
+    MARKER TODO: print success/failure
+    """
+    def appendToChain(self, block, pow):
+        if (block.preceding == self.preceding.hash
+        and self.verifyPoW(block, pow)):
+            block.hash = pow
+            self.chain.append(block)
+            return True
+        else:
+            return False
+
+    """
     Confirm block by computing PoW. In larger-scale implementations,
     transactions to confirm should be split appropriately. Returns new
     identifier to keep track of the tail block.
@@ -106,18 +121,4 @@ class Blockchain:
             return blockToAdd.index
         else:
             return False
-
-    """
-    Checks if the previous hash matches and proof of work is valid. If they
-    are, the block is appended to the Blockchain.
-
-    MARKER TODO: print success/failure
-    """
-    def appendToChain(self, block, pow):
-        if (block.preceding == self.preceding.hash
-        and self.verifyPoW(block, pow)):
-            block.hash = pow
-            self.chain.append(block)
-            return True
-        else:
-            return False
+    
