@@ -39,7 +39,7 @@ Blockchain but uses Proof of Work over their own consensus mechanism.
 """
 class Blockchain:
 
-    difficulty = 5; # To be adjusted as needed based on hash power
+    difficultyFactor = 5; # Adjusted as needed based on hash power
 
     def __init__(self):
         self.chain = [] # The actual blockchain
@@ -63,21 +63,8 @@ class Blockchain:
         firstBlock.hash = originBlock.doWork() # Hash added as new item
         self.chain.append(firstBlock)
 
-    """
-    Checks if the previous hash matches and proof of work is valid. If they
-    are, the block is appended to the Blockchain.
-
-    MARKER TODO: print success/failure
-    """
-    def appendToChain(self, block, pow):
-        if (block.preceding == self.preceding.hash
-        and pow.startswith('0' * Blockchain.difficulty)
-        and pow == block.doWork()):
-            block.hash = pow
-            self.chain.append(block)
-            return True
-        else:
-            return False
+    def queueTx(self, tx):
+        self.unconfirmed.append(tx)
 
     """
     Proof of Work (PoW): hard to produce data but easy to check - prevents
@@ -89,5 +76,24 @@ class Blockchain:
         block.nonce = 0
         while True:
             hash = block.doWork()
-            if (hash.startswith('0' * Blockchain.difficulty):
+            if (hash.startswith('0' * Blockchain.difficultyFactor):
                 return hash
+
+    def verifyPoW(self, block, hash):
+        return (pow.startswith('0' * Blockchain.difficultyFactor)
+                and pow == block.doWork())
+
+    """
+    Checks if the previous hash matches and proof of work is valid. If they
+    are, the block is appended to the Blockchain.
+
+    MARKER TODO: print success/failure
+    """
+    def appendToChain(self, block, pow):
+        if (block.preceding == self.preceding.hash
+        and self.verifyPoW(block, pow)):
+            block.hash = pow
+            self.chain.append(block)
+            return True
+        else:
+            return False
