@@ -142,6 +142,28 @@ class Blockchain:
         else:
             return False
 
+    @classmethod
+    def isValidChain(cls, chain):
+        result = True
+        last = "0"
+
+        # MARKER CHANGE THIS
+        for block in chain:
+            hash = block.hash
+            # remove the hash field to recompute the hash again
+            # using `compute_hash` method.
+            delattr(block, "hash")
+
+            if not (block_hash.startswith('0' * Blockchain.difficulty)
+                    or hash == block.doWork())
+                    or last == block.last:
+                result = False
+                break
+
+            block.hash, last = hash, hash
+
+        return result
+
 '''
 ===========================================================================
 End of Blockchain class
@@ -165,7 +187,7 @@ def consensus():
         response = requests.get('http://{}/blockchain'.format(node))
         length = response.json()['length']
         thisChain = response.json()['chain']
-        if thisLength > length and blockchain.isValid(thisChain):
+        if thisLength > length and blockchain.isValidChain(thisChain):
             length = thisLength
             longest = thisChain
     if longest:
@@ -173,6 +195,8 @@ def consensus():
         return True
     else:
         return False
+
+
 
 '''
 ===========================================================================
