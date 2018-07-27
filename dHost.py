@@ -36,7 +36,7 @@ block with a hash, rather than a pointer.
 class Blockchain:
 
     def __init__(self):
-        self.chain = []
+        self.chain = [] # The actual blockchain
         self.unconfirmed = [] # Transactions not yet hashed and appended
         self.intialiseChain()
 
@@ -45,4 +45,6 @@ class Blockchain:
     other blocks in that it has no preceding block to point to.
     """
     def initialiseChain():
-        originBlock = Block(0, '0', [], time.time()) # MARKER check '' vs ""
+        firstBlock = Block(0, '0', [], time.time()) # MARKER check '' vs ""
+        firstBlock.hash = originBlock.doWork() # Hash added as new item
+        self.chain.append(firstBlock)
