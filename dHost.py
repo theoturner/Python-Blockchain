@@ -1,7 +1,8 @@
 # dHost - a node in the network
 
-# We use SHA256 as our cryptographic hash fucntion
+# We use SHA256 as our cryptographic hash function
 from hashlib import sha256
+import json
 
 # Block
 # A group of records added to the blockchain in each
