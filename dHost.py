@@ -17,6 +17,8 @@ from flask import Flask, request
 
 
 app = Flask(__name__)
+nodes = set()
+
 
 '''
 ===========================================================================
@@ -121,10 +123,8 @@ class Blockchain:
 
     '''
     Confirm block by computing PoW. In larger-scale implementations,
-    transactions to confirm should be split appropriately. Returns new
-    identifier to keep track of the tail block.
-
-    MARKER TODO print nothing to mine
+    transactions to confirm should be split appropriately. Also broadcasts
+    confirmations to the network.
     '''
     def confirm(self):
         if self.unconfirmed: # If there are transactions to confirm
@@ -135,6 +135,9 @@ class Blockchain:
             pow = self.proveWork(blockToAdd)
             self.appendToChain(blockToAdd, pow)
             self.unconfirmed = []
+            for node in nodes:
+                requests.post('http://{}/addblocks'.format(node),
+                data = json.dumps(blockToAdd.__dict__, sort_keys = True))
             return True
         else:
             return False
@@ -156,11 +159,10 @@ Six endpoints - adapted from IBM Blockchain developerWorks documentation.
 3. Request confirmation of transactions (GET)
 4. Query unconfirmed transactions
 5. Add nodes to network (POST)
-6. Chack and add block confirmed by another node to chain (POST)
+6. Check and add block confirmed by another node to chain (POST)
 ===========================================================================
 '''
 
-nodes = set()
 nodeChainCopy = Blockchain()
 
 '''
@@ -238,6 +240,7 @@ def addBlocks():
 End of endpoints
 ===========================================================================
 '''
+
 
 
 app.run(debug = True, port = 8000)
