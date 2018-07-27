@@ -4,7 +4,7 @@ This repository contains code for a public blockchain and GUI allowing users to 
 
 This distributed ledger is based on the [IBM Blockchain](https://www.ibm.com/blockchain), however Proof of Work (PoW) is used as a consensus algorithm instead of IBM SE. The PoW structure is adapted from Kansal (2018) with SHA256 as the cryptographic hash function.
 
-[Flask](http://flask.pocoo.org/) is used for the front end and is needed to run the app. Flask allows for RESTful interaction with nodes.
+[Flask](http://flask.pocoo.org/) is used for the front end and is needed to run the app. Flask allows for RESTful interaction with nodes - endpoints are adapted from IBM Blockchain developerWorks documentation.
 
 For larger-scale implementations, please modify the confirm() function to
 split transactions appropriately and security audit the code.
