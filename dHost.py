@@ -1,7 +1,8 @@
 """
 dHost - a node in the network.
 Uses SHA256 as its cryptographic hash function. The Blockchain class has
-the structure of the IBM Blockchain but with PoW instead of SE.
+the structure of the IBM Blockchain but with PoW instead of SE. PoW
+algorithm adapted from Kansal, 2018.
 """
 
 from hashlib import sha256
@@ -20,6 +21,7 @@ class Block:
         self.last = last # Hash of preceding block
         self.tx = tx # Transactions
         self.timestamp = timestamp
+        self.nonce = nonce # For Proof of Work algorithm
 
     """
     Calculate hash on block data itself.
@@ -36,6 +38,8 @@ block with a hash, rather than a pointer. Uses same structure as the IBM
 Blockchain but uses Proof of Work over their own consensus mechanism.
 """
 class Blockchain:
+
+    difficulty = 5; # To be adjusted as needed based on hash power
 
     def __init__(self):
         self.chain = [] # The actual blockchain
@@ -58,3 +62,16 @@ class Blockchain:
         firstBlock = Block(0, '0', [], time.time()) # MARKER check '' vs ""
         firstBlock.hash = originBlock.doWork() # Hash added as new item
         self.chain.append(firstBlock)
+
+    """
+    Proof of Work (PoW): hard to produce data but easy to check - prevents
+    creation of multiple 'valid' chains as well as defends against Denial
+    of Service (DoS) attacks. Try random nonce until match on first
+    character (with difficulty modifier) - adapted from Kansal, 2018.
+    """
+    def proveWork(self):
+        block.nonce = 0
+        while True:
+            hash = block.doWork()
+            if (hash.startswith('0' * Blockchain.difficulty):
+                return hash
