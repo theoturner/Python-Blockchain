@@ -1,8 +1,12 @@
 """
 dHost - a node in the network.
+
 Uses SHA256 as its cryptographic hash function. The Blockchain class has
 the structure of the IBM Blockchain but with PoW instead of SE. PoW
 algorithm adapted from Kansal, 2018.
+
+For larger-scale implementations, please modify the confirm() function to
+split transactions appropriately.
 """
 
 from hashlib import sha256
@@ -16,11 +20,11 @@ record-keeping, merkle trees are unnecessary.
 """
 class Block:
 
-    def __init__(self, identifier, last, tx, timestamp):
+    def __init__(self, identifier, last, tx, timeAppended):
         self.identifier = identifier
         self.last = last # Hash of preceding block
         self.tx = tx # Transactions
-        self.timestamp = timestamp
+        self.timeAppended = timeAppended
         self.nonce = nonce # For Proof of Work algorithm
 
     """
@@ -82,6 +86,22 @@ class Blockchain:
     def verifyPoW(self, block, hash):
         return (pow.startswith('0' * Blockchain.difficultyFactor)
                 and pow == block.doWork())
+
+    """
+    Confirm block by computing PoW. In larger-scale implementations,
+    transactions to confirm should be split appropriately. Returns new
+    identifier to keep track of the tail block.
+    """
+    def confirm(self):
+        if self.unconfimed: # If there are transactions to confirm
+            blockToAdd = Block( identifier = self.preceding.identifier + 1,
+                                last = self.preceding.hash,
+                                tx = self.unconfirmed
+                                timeAppended = time.time())
+            pow = self.proveWork(blockToAdd)
+            self.appendToChain(blockToAdd, pow)
+            self.unconfirmed = []
+            return blockToAdd.index
 
     """
     Checks if the previous hash matches and proof of work is valid. If they
