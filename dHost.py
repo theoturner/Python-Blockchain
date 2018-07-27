@@ -21,9 +21,11 @@ class Block:
         self.timestamp = timestamp
 
     """
-    Calculate hash on block.
+    Calculate hash on block data itself.
     """
     def proveWork(self):
+        hash = sha256(json.dumps(self.__dict__, sort_keys = True).encode())
+        return hash.hexdigest()
 
 """
 Blockchain
