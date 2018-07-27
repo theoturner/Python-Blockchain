@@ -91,6 +91,8 @@ class Blockchain:
     Confirm block by computing PoW. In larger-scale implementations,
     transactions to confirm should be split appropriately. Returns new
     identifier to keep track of the tail block.
+
+    MARKER TODO print nothing to mine
     """
     def confirm(self):
         if self.unconfimed: # If there are transactions to confirm
@@ -102,6 +104,8 @@ class Blockchain:
             self.appendToChain(blockToAdd, pow)
             self.unconfirmed = []
             return blockToAdd.index
+        else:
+            return False
 
     """
     Checks if the previous hash matches and proof of work is valid. If they
