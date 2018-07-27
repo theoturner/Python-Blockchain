@@ -4,6 +4,7 @@ Uses SHA256 as its cryptographic hash function.
 """
 
 from hashlib import sha256
+import time
 import json
 
 """
@@ -39,4 +40,9 @@ class Blockchain:
         self.unconfirmed = [] # Transactions not yet hashed and appended
         self.intialiseChain()
 
+    """
+    Creates the first block in the blockchain as this is distinct from
+    other blocks in that it has no preceding block to point to.
+    """
     def initialiseChain():
+        originBlock = Block(0, '0', [], time.time()) # MARKER check '' vs ""
