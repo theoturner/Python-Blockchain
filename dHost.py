@@ -22,7 +22,7 @@ class Block:
     """
     Calculate hash on block data itself.
     """
-    def proveWork(self):
+    def doWork(self):
         hash = sha256(json.dumps(self.__dict__, sort_keys = True).encode())
         return hash.hexdigest()
 
