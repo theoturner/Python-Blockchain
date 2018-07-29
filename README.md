@@ -7,7 +7,7 @@ The architecture his based on the [IBM Blockchain](https://www.ibm.com/blockchai
 [Flask](http://flask.pocoo.org/) is used for the front end and is needed to run the app. Flask allows for RESTful interaction with nodes.
 
 
-## How to use the Python Blockchain
+### How to use the Python Blockchain
 
 Install [Python 3](https://www.python.org/downloads/), version 3.4 or later.
 
