@@ -2,6 +2,7 @@ import json
 from hashlib import sha256
 
 class Block:
+    
     def __init__(self, block_id, timestamp, preceding_block_hash, block_tx):
         self.block_id = block_id
         self.timestamp = timestamp
