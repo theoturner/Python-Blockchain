@@ -40,7 +40,6 @@ def confirm_tx():
     else:
         return 'Nothing to confirm: no pending transactions.'
 
-
 # Add nodes to network
 @app.route('/add_nodes', methods = ['POST'])
 def add_nodes():
