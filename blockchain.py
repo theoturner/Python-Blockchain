@@ -18,7 +18,7 @@ class Blockchain:
     def preceding_block(self):
         return self.blockchain[-1]
 
-    # Difficulty-modified work condition adapted from Kansal (2018)
+    # Difficulty can be changed in settings.py
     def work_condition(self, hash):
         return hash.startswith('0' * settings.difficulty)
 
