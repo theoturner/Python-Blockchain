@@ -22,7 +22,7 @@ class Blockchain:
     def work_condition(self, hash):
         return hash.startswith('0' * settings.difficulty)
 
-    # Append block after verifying hash and proof of work
+    # Append block after verifying hash and PoW
     def append_block(self, block, pow):
 
         if not (self.preceding_block.hash == block.preceding_block_hash
