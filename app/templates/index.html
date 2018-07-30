@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block content %}
+	<style>
+		body, input, textarea, button {
+			background-color: #25282F;
+			color: #99C27C;
+			font-family: monospace;
+		}
+		h1 {
+			font-weight: normal;
+		}
+		.blockchain {
+			margin-top: 0.5em;
+		}
+		.transaction {
+			padding-top: 0.5em;
+			border-top: 1px solid #99C27C;
+		}
+		.time {
+			color: #DE6D77;
+		}
+		.data {
+			margin-top: 0.1em;
+			margin-bottom: 0.1em;
+		}
+	</style>
+	<a href = '/'>
+		<button>Refresh blockchain</button>
+	</a>
+	<form action = '/submit' id = 'textform' method = 'post'>
+		<input type = 'text' name = 'user' placeholder = 'Author'>
+		<br>
+	    <textarea name = 'data' rows = '5' cols = '100' placeholder = 'Data to store...'></textarea>
+	    <br>
+	    <input type = 'submit' value = 'Submit transaction'>
+	</form>
+	<a href = '{{host}}/confirm_pending_transactions' target = '_blank'>
+		<button>Request block confirmation</button>
+	</a>
+	<div class = 'blockchain'>
+    {% for post in ordered_tx %}
+	    <div class = 'transaction'>
+		   <div>
+		      <div class = 'author'>{{ post.user }}</div>
+		      <div class = 'time'>{{ time(post.timestamp) }}</div>
+		   </div>
+		   <div>
+		      <div class = 'data'>
+		         <p>{{ post.data }}</p>
+		      </div>
+		   </div>
+		</div>
+	{% endfor %}
+    </div>
+{% endblock %}
