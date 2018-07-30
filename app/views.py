@@ -2,7 +2,7 @@ import json
 import datetime
 import requests
 from app import app
-from flask import render_template, redirect, request
+from flask import request, render_template, redirect
 
 host = 'http://127.0.0.1:8000'
 ordered_tx = []
