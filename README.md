@@ -11,14 +11,14 @@ The architecture is based on the [IBM Blockchain](https://www.ibm.com/blockchain
 
 Install [Python 3](https://www.python.org/downloads/), version 3.4 or later.
 
-Open a terminal window, then use pip3 to install Flask and requests:
+Open a terminal window, then use pip to install Flask and requests:
 
 ```
 pip3 install flask
 pip3 install requests
 ```
 
-Open two terminal windows and navigate to your project folder in both.
+Open two terminal windows and navigate to the project folder in both.
 
 Start the node in one window:
 
