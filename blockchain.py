@@ -78,7 +78,7 @@ class Blockchain:
             for node in settings.network:
                 endpoint = 'http://{}/append_block'.format(node)
                 requests.post(endpoint, data = json.dumps(block.__dict__,
-                                                        sort_keys = True))
+                                                          sort_keys = True))
             return pending_block.block_id
         else:
             return False
