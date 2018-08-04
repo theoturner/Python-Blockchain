@@ -1,6 +1,6 @@
 # Python Blockchain: immutable decentralised data storage
 
-A public blockchain + GUI allowing users to store and share information that can't be tampered with or repudiated.
+A public blockchain and GUI allowing users to store and share information that can't be tampered with or repudiated.
 
 The architecture is based on the [IBM Blockchain](https://www.ibm.com/blockchain), however Proof of Work (PoW) is used as a consensus algorithm instead of IBM SE. The PoW structure is adapted from Kansal 2018 with SHA256 as the cryptographic hash function.
 
