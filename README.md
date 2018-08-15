@@ -34,4 +34,4 @@ python3 gui.py
 
 You can now view and interact with the blockchain at [http://localhost:5000](http://localhost:5000).
 
-Blockchain difficulty can be adjusted in `settings.py`. For larger-scale implementations, please modify the confirm() function to split transactions appropriately and security audit the code.
+Blockchain difficulty can be adjusted in `settings.py` (a higher number means a more expensive computation). For larger-scale implementations, please modify the confirm() function to split transactions appropriately and security audit the code.
