@@ -4,19 +4,17 @@ A public blockchain and GUI allowing users to store and share information that c
 
 The architecture is based on the [IBM Blockchain](https://www.ibm.com/blockchain), however Proof of Work (PoW) is used as a consensus algorithm instead of IBM SE. The PoW structure is adapted from Kansal (2018) with SHA256 as the cryptographic hash function.
 
-[Flask](http://flask.pocoo.org/) is used for the front end and is needed to run the app. Flask allows for RESTful interaction with nodes.
+## Requirements
 
+- Python 3
 
-### How to use the Python Blockchain
-
-Install [Python 3](https://www.python.org/downloads/), version 3.4 or later.
-
-Open a terminal window, then use pip to install Flask and requests:
+## Install
 
 ```
-pip3 install flask
-pip3 install requests
+pip3 install flask requests
 ```
+
+## Run
 
 Open two terminal windows and navigate to the project folder in both.
 
